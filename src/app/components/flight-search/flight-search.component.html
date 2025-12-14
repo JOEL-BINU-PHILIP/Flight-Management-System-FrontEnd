@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Search Flights</h2>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <form (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <label for="fromPlace" class="form-label">From</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fromPlace"
+              [(ngModel)]="searchForm.fromPlace"
+              name="fromPlace"
+              placeholder="e.g., Bangalore"
+              required
+            />
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label for="toPlace" class="form-label">To</label>
+            <input
+              type="text"
+              class="form-control"
+              id="toPlace"
+              [(ngModel)]="searchForm.toPlace"
+              name="toPlace"
+              placeholder="e.g., Mumbai"
+              required
+            />
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="date"
+              [(ngModel)]="searchForm.date"
+              name="date"
+              required
+            />
+          </div>
+
+          <div class="col-md-3 mb-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isSearched && flights.length === 0" class="alert alert-info">
+    No flights found for the selected route and date. 
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3" *ngFor="let flight of flights">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ flight.airlineName }} - {{ flight.flightNumber }}</h5>
+          <p class="card-text">
+            <strong>Route:</strong> {{ flight.fromPlace }} → {{ flight.toPlace }}<br>
+            <strong>Departure:</strong> {{ formatDateTime(flight.departureTime) }}<br>
+            <strong>Arrival:</strong> {{ formatDateTime(flight.arrivalTime) }}<br>
+            <strong>Price:</strong> ₹{{ flight.price }}<br>
+            <strong>Available Seats:</strong> {{ flight.availableSeats }}
+          </p>
+          <button class="btn btn-primary" (click)="viewDetails(flight.id)">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
