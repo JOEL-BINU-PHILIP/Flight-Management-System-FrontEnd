@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Add New Airline</h3>
+          
+          <form (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="name" class="form-label">Airline Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                [(ngModel)]="form.name"
+                name="name"
+                placeholder="e.g., IndiGo"
+                required
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="logoUrl" class="form-label">Logo URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="logoUrl"
+                [(ngModel)]="form.logoUrl"
+                name="logoUrl"
+                placeholder="https://example.com/logo.png"
+                required
+              />
+            </div>
+
+            <div class="alert alert-success" *ngIf="isSuccessful">
+              ✅ Airline added successfully! 
+            </div>
+
+            <div class="alert alert-danger" *ngIf="isFailed">
+              {{ errorMessage }}
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                Add Airline
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
