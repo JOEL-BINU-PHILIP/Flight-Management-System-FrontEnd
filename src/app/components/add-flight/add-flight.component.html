@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Add Flight Inventory</h3>
+          
+          <form (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="airlineId" class="form-label">Airline ID</label>
+                <input type="text" class="form-control" id="airlineId" [(ngModel)]="form.airlineId" name="airlineId" required />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="flightNumber" class="form-label">Flight Number</label>
+                <input type="text" class="form-control" id="flightNumber" [(ngModel)]="form.flightNumber" name="flightNumber" placeholder="e.g., 6E101" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fromPlace" class="form-label">From</label>
+                <input type="text" class="form-control" id="fromPlace" [(ngModel)]="form.fromPlace" name="fromPlace" placeholder="e.g., Bangalore" required />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="toPlace" class="form-label">To</label>
+                <input type="text" class="form-control" id="toPlace" [(ngModel)]="form.toPlace" name="toPlace" placeholder="e.g., Mumbai" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="departureTime" class="form-label">Departure Time</label>
+                <input type="datetime-local" class="form-control" id="departureTime" [(ngModel)]="form.departureTime" name="departureTime" required />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="arrivalTime" class="form-label">Arrival Time</label>
+                <input type="datetime-local" class="form-control" id="arrivalTime" [(ngModel)]="form.arrivalTime" name="arrivalTime" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="price" class="form-label">Price (₹)</label>
+                <input type="number" class="form-control" id="price" [(ngModel)]="form.price" name="price" min="0" required />
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="totalSeats" class="form-label">Total Seats</label>
+                <input type="number" class="form-control" id="totalSeats" [(ngModel)]="form.totalSeats" name="totalSeats" min="1" required />
+              </div>
+            </div>
+
+            <div class="alert alert-success" *ngIf="isSuccessful">
+              ✅ Flight added successfully!
+            </div>
+
+            <div class="alert alert-danger" *ngIf="isFailed">
+              {{ errorMessage }}
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                Add Flight
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
