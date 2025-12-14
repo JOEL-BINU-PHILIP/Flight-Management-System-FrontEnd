@@ -8,7 +8,7 @@ import { FlightService } from '../../services/flight.service';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './add-flight.component.html',
-  styleUrl: './add-flight.component.css'
+  styleUrl: './add-flight.css'
 })
 export class AddFlightComponent {
   form: any = {

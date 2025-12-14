@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './add-airline.component.html',
-  styleUrl: './add-airline.component.css'
+  styleUrl: './add-airline.css'
 })
 export class AddAirlineComponent {
   form: any = {

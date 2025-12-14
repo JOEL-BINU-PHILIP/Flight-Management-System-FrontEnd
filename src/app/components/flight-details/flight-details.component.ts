@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './flight-details.component.html',
-  styleUrl: './flight-details.component.css'
+  styleUrl: './flight-details.css'
 })
 export class FlightDetailsComponent implements OnInit {
   flight?:  FlightInfoDTO;

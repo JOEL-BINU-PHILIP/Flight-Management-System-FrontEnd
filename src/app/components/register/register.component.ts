@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
-  templateUrl: './register. component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './register.component.html',
+  styleUrl: './register.css'
 })
 export class RegisterComponent {
   form: any = {

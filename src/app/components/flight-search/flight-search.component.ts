@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './flight-search.component.html',
-  styleUrl: './flight-search.component.css'
+  styleUrl: './flight-search.css'
 })
 export class FlightSearchComponent {
   searchForm:  any = {

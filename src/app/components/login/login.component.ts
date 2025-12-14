@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl:  './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.css'
 })
 export class LoginComponent {
   form: any = {
