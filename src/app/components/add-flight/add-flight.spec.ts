@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddFlight } from './add-flight';
+import { AddFlight } from './add-flight.component';
 
 describe('AddFlight', () => {
   let component: AddFlight;
