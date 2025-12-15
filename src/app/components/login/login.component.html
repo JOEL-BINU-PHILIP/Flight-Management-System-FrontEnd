@@ -8,26 +8,44 @@
                     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required
-                                email #email="ngModel" />
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                name="email" 
+                                [(ngModel)]="form.email" 
+                                required
+                                email 
+                                #email="ngModel" 
+                            />
                             <div class="text-danger mt-1" *ngIf="email.invalid && (email.dirty || email.touched)">
                                 <small *ngIf="email.errors?.['required']">Email is required</small>
-                                <small *ngIf="email.errors?. ['email']">Email must be valid</small>
+                                <small *ngIf="email.errors?.['email']">Email must be valid</small>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" [(ngModel)]="form.password"
-                                required minlength="6" #password="ngModel" />
-                            <div class="text-danger mt-1"
-                                *ngIf="password. invalid && (password.dirty || password.touched)">
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                name="password" 
+                                [(ngModel)]="form.password"
+                                required 
+                                minlength="6" 
+                                #password="ngModel" 
+                            />
+                            <div class="text-danger mt-1" *ngIf="password.invalid && (password.dirty || password.touched)">
                                 <small *ngIf="password.errors?.['required']">Password is required</small>
-                                <small *ngIf="password.errors?. ['minlength']">Password must be at least 6
-                                    characters</small>
+                                <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</small>
                             </div>
                         </div>
 
+                        <!-- ✅ SUCCESS MESSAGE (GREEN BOX) -->
+                        <div class="alert alert-success" *ngIf="isLoginSuccessful">
+                            {{ successMessage }}
+                        </div>
+
+                        <!-- ❌ ERROR MESSAGE (RED BOX) -->
                         <div class="alert alert-danger" *ngIf="isLoginFailed">
                             {{ errorMessage }}
                         </div>

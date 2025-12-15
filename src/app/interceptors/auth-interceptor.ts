@@ -6,13 +6,17 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenStorage = inject(TokenStorageService);
   const token = tokenStorage.getToken();
 
+  let authReq = req. clone({
+    withCredentials: true  
+  });
+
   if (token) {
-    req = req.clone({
+    authReq = authReq.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
     });
   }
 
-  return next(req);
+  return next(authReq);
 };
