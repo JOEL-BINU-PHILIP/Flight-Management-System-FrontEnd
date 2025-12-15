@@ -4,7 +4,7 @@ import { TokenStorageService } from '../services/token-storage.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenStorage = inject(TokenStorageService);
-  const token = tokenStorage.getToken();
+  const token = tokenStorage. getToken();
 
   let authReq = req. clone({
     withCredentials: true  
@@ -17,6 +17,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
   }
+
+  console.log('🔐 Auth Interceptor - Token:', token ?  'Present' : 'Missing');
+  console.log('🔐 Request URL:', req.url);
+  console.log('🔐 Headers:', authReq.headers. keys());
 
   return next(authReq);
 };

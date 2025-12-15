@@ -8,25 +8,25 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector:  'app-login',
   standalone: true,
-  imports:  [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
-  form:  any = {
-    email: '',
+  form: any = {
+    email:  '',
     password: ''
   };
   
   isLoginFailed = false;
   isLoginSuccessful = false;  
   errorMessage = '';
-  successMessage = '';  // ✅ NEW
+  successMessage = '';
   isLoading = false;
 
   constructor(
     private authService: AuthService,
-    private tokenStorage: TokenStorageService,
+    private tokenStorage:  TokenStorageService,
     private router: Router
   ) {}
 
@@ -35,12 +35,15 @@ export class LoginComponent {
     this. isLoginFailed = false;
     this.isLoginSuccessful = false;
 
+    console.log('🔐 Login - Attempting login for:', this.form.email);
+
     this.authService.login(this.form).subscribe({
       next: data => {
+        console.log('✅ Login Success:', data);
+        
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
         
-        // ✅ Determine role and show success message
         const role = data.role === 'ROLE_ADMIN' ? 'Admin' : 'Customer';
         this.successMessage = `✅ Logged in as ${role}`;
         
@@ -48,10 +51,16 @@ export class LoginComponent {
         this.isLoginFailed = false;
         this.isLoading = false;
 
-        // ✅ Reload navbar to show logged-in state
-        window.location.reload();
+        console.log('🔐 Token saved:', this.tokenStorage.getToken());
+
+        // Reload navbar to show logged-in state
+        setTimeout(() => {
+          this.router.navigate(['/search']);
+          window.location.reload();
+        }, 1000);
       },
       error: err => {
+        console.error('❌ Login Failed:', err);
         this.errorMessage = 'Invalid email or password';
         this.isLoginFailed = true;
         this.isLoading = false;

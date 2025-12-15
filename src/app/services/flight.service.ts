@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   SearchFlightRequest,
@@ -19,10 +19,11 @@ export class FlightService {
   constructor(private http: HttpClient) { }
 
   searchFlights(searchRequest: SearchFlightRequest): Observable<SearchFlightResponse> {
+    console.log('🔍 Flight Service - Searching flights:', searchRequest);
     return this.http.post<SearchFlightResponse>(
       FLIGHT_API + 'search',
       searchRequest,
-      { withCredentials: true }  // ✅ ADD THIS
+      { withCredentials: true }
     );
   }
 
