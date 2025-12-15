@@ -9,13 +9,13 @@ import { AddFlightComponent } from './components/add-flight/add-flight.component
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-  { path:  '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'search', component: FlightSearchComponent, canActivate: [authGuard] },
-  { path: 'flight/: id', component: FlightDetailsComponent, canActivate: [authGuard] },
-  { path:  'add-airline', component: AddAirlineComponent, canActivate: [authGuard] },
+  { path: 'flight/:id', component: FlightDetailsComponent, canActivate:  [authGuard] }, 
+  { path: 'add-airline', component: AddAirlineComponent, canActivate: [authGuard] },
   { path: 'add-flight', component: AddFlightComponent, canActivate:  [authGuard] },
   { path: '**', redirectTo: '/home' }
 ];
