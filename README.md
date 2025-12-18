@@ -1,59 +1,127 @@
-# FlightManagementFrontend
+# Flight Management System - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+A modern Angular-based frontend application for the Flight Management System, providing a user interface for searching, booking, and managing flight reservations.
 
-## Development server
+---
 
-To start a local development server, run:
+## Project Documentation
+
+For Important Screenshots - **[Project Summary Report (PDF)](https://github.com/JOEL-BINU-PHILIP/Flight-Management-System-FrontEnd/blob/main/Project-Summary-Report.pdf)**
+
+---
+
+## Overview
+
+This is the frontend application for the Flight Management System, built with Angular 21 and Bootstrap 5. It provides a responsive interface for customers to search and book flights, and for administrators to manage airlines and flight inventory.
+
+---
+
+## Tech Stack
+
+- **Angular** 21.0.3
+- **TypeScript** 5.9.2
+- **Bootstrap** 5.3.8
+- **RxJS** 7.8.0
+- **Vitest** 4.0.8
+
+---
+
+## Prerequisites
+
+- Node.js v18. x or higher
+- npm v11.6. 4 or higher
+- Angular CLI v21.0.3 (optional)
+
+---
+
+## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/flight-management-frontend.git
+cd flight-management-frontend
+
+# Install dependencies
+npm install
+```
+
+---
+
+## Configuration
+
+Update the backend API URLs in service files if needed:
+
+**src/app/services/auth. service.ts**
+```typescript
+const AUTH_API = 'http://localhost:8080/auth/';
+```
+
+**src/app/services/flight.service.ts**
+```typescript
+const FLIGHT_API = 'http://localhost:8080/api/flight/';
+```
+
+---
+
+## Running the Application
+
+```bash
+# Start development server
+npm start
+
+# Or using Angular CLI
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The application will be available at `http://localhost:4200/`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Available Routes
 
-```bash
-ng generate component component-name
-```
+| Route | Component | Access | Description |
+|-------|-----------|--------|-------------|
+| `/` | Home | Public | Landing page |
+| `/login` | Login | Public | User login |
+| `/register` | Register | Public | User registration |
+| `/search` | Flight Search | Protected | Search flights |
+| `/flight/: id` | Flight Details | Protected | View flight details |
+| `/add-airline` | Add Airline | Admin Only | Add new airline |
+| `/add-flight` | Add Flight | Admin Only | Add flight inventory |
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## API Integration
 
-## Building
+The frontend communicates with the backend microservices through an API Gateway at `http://localhost:8080`.
 
-To build the project run:
+### Authentication Endpoints
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - Login (returns JWT)
+- `POST /auth/logout` - Logout
 
-```bash
-ng build
-```
+### Flight Endpoints
+- `POST /api/flight/search` - Search flights
+- `GET /api/flight/details/:id` - Get flight details
+- `POST /api/flight/airline` - Add airline (Admin)
+- `POST /api/flight/airline/:id/inventory` - Add flight (Admin)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Booking Endpoints
+- `POST /api/book/book` - Book flight
+- `GET /api/book/ticket/:pnr` - Get ticket
+- `GET /api/book/history/: email` - Booking history
+- `DELETE /api/book/cancel/:pnr` - Cancel booking
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Authentication
 
-```bash
-ng test
-```
+The application uses JWT-based authentication with HTTP-only cookies. Tokens are automatically injected into requests via an HTTP interceptor.
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Related Projects
 
-```bash
-ng e2e
-```
+- [Backend Microservices](https://github.com/JOEL-BINU-PHILIP/Flight-Management-System-Microservices-Architecture-With-JWT-Authentication-Docker)
+- [Configuration Repository](https://github.com/JOEL-BINU-PHILIP/fms-config-repo)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
