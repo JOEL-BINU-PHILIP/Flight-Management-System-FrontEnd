@@ -44,14 +44,14 @@ export class AddFlightComponent {
       arrivalTime: arrivalISO
     };
 
-    this. flightService.addFlightInventory(this.form.airlineId, payload).subscribe({
+    this.flightService.addFlightInventory(this.form.airlineId, payload).subscribe({
       next: data => {
         this.isSuccessful = true;
         this.isLoading = false;
         this.resetForm();
       },
       error: err => {
-        this. errorMessage = err.error || 'Failed to add flight';
+        this.errorMessage = err.error || 'Failed to add flight';
         this.isFailed = true;
         this.isLoading = false;
       }
@@ -65,7 +65,7 @@ export class AddFlightComponent {
       fromPlace: '',
       toPlace: '',
       departureTime: '',
-      arrivalTime:  '',
+      arrivalTime: '',
       price: 0,
       totalSeats: 0
     };

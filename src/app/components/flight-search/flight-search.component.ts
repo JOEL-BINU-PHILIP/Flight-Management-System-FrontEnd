@@ -35,9 +35,9 @@ export class FlightSearchComponent {
 
     this.flightService.searchFlights(this.searchForm).subscribe({
       next: data => {
-        this.flights = data. flights;
+        this.flights = data.flights;
         this.isSearched = true;
-        this. isLoading = false;
+        this.isLoading = false;
       },
       error: err => {
         this.errorMessage = 'Failed to search flights';

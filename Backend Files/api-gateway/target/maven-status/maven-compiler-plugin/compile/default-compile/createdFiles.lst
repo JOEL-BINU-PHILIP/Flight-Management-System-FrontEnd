@@ -1,5 +1,0 @@
-com\example\fms\gateway\security\JwtUtil.class
-com\example\fms\gateway\ApiGatewayApplication.class
-com\example\fms\gateway\security\JwtAuthenticationFilter.class
-com\example\fms\gateway\security\JwtAuthenticationFilter$Config.class
-com\example\fms\gateway\security\SecurityConfig.class
