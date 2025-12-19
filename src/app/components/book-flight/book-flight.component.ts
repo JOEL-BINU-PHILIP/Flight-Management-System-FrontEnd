@@ -13,43 +13,44 @@ import { FlightService } from '../../services/flight.service';
 })
 export class BookFlightComponent implements OnInit {
   bookingForm! : FormGroup;
-  selectedFlight:  any = null;
+  selectedFlight: any = null;
   bookingSuccess = false;
   bookingError = false;
   errorMessage = '';
-  isLoading = false;
+  isLoading = true;  // ⚠️ Start as true while loading
   bookingResponse: any = null;
 
   constructor(
-    private fb:  FormBuilder,
-    private route:  ActivatedRoute,
-    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    public router: Router,
     private flightService: FlightService
-  ) {}
+  ) {
+    console.log('🏗️ BookFlightComponent Constructor');
+  }
 
   ngOnInit(): void {
-    // Get flight details from route state
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras. state) {
-      this.selectedFlight = navigation.extras.state['flight'];
+    console. log('🚀 BookFlightComponent ngOnInit');
+
+    // Get flight ID from URL parameter
+    const flightId = this.route.snapshot.paramMap. get('flightId');
+    console.log('🆔 Flight ID from URL:', flightId);
+
+    if (flightId) {
+      // Load flight details from API
+      this.loadFlightDetails(flightId);
+    } else {
+      console.log('❌ No flight ID in URL - redirecting to search');
+      this.router.navigate(['/search']);
     }
 
-    // If no flight data, try to get from route params
-    if (!this.selectedFlight) {
-      const flightId = this.route.snapshot.paramMap.get('flightId');
-      if (flightId) {
-        this.loadFlightDetails(flightId);
-      } else {
-        this.router. navigate(['/search']);
-      }
-    }
-
+    // Initialize form
     this.initializeForm();
   }
 
   initializeForm(): void {
     this.bookingForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators. email]],
       passengers: this.fb.array([this.createPassengerForm()])
     });
   }
@@ -59,7 +60,7 @@ export class BookFlightComponent implements OnInit {
       name: ['', Validators.required],
       gender: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1), Validators.max(120)]],
-      seatNumber:  ['', Validators.required],
+      seatNumber: ['', Validators.required],
       meal: ['', Validators.required]
     });
   }
@@ -80,21 +81,32 @@ export class BookFlightComponent implements OnInit {
     }
   }
 
-  loadFlightDetails(flightId:  string): void {
+  loadFlightDetails(flightId: string): void {
+    console.log('📡 Loading flight details for ID:', flightId);
+    this.isLoading = true;
+
     this.flightService.getFlightDetails(flightId).subscribe({
       next: (data) => {
+        console.log('Flight details loaded:', data);
         this.selectedFlight = data;
+        this. isLoading = false;
       },
       error: (err) => {
-        console.error('Error loading flight:', err);
-        this.router.navigate(['/search']);
+        console.error(' Error loading flight:', err);
+        this.errorMessage = 'Failed to load flight details';
+        this.isLoading = false;
+        
+        // Redirect after 2 seconds
+        setTimeout(() => {
+          this.router.navigate(['/search']);
+        }, 2000);
       }
     });
   }
 
   calculateTotalAmount(): number {
     if (!this.selectedFlight) return 0;
-    return this. selectedFlight.price * this. passengers.length;
+    return this. selectedFlight.price * this.passengers.length;
   }
 
   formatDateTime(dateTime: string): string {
@@ -118,20 +130,19 @@ export class BookFlightComponent implements OnInit {
       passengers: this.bookingForm.value.passengers
     };
 
-    console.log('Booking Request:', bookingRequest);
+    console.log('📤 Submitting booking:', bookingRequest);
 
     this.flightService.bookFlight(bookingRequest).subscribe({
       next: (response) => {
-        console.log('Booking Response:', response);
+        console.log('Booking successful:', response);
         this.bookingResponse = response;
         this.bookingSuccess = true;
         this.isLoading = false;
         
-        // Scroll to success message
         window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (err) => {
-        console.error('Booking Error:', err);
+        console.error('Booking failed:', err);
         this.errorMessage = err.error?.message || 'Failed to book flight.  Please try again.';
         this.bookingError = true;
         this.isLoading = false;

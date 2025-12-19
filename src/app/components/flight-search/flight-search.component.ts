@@ -50,11 +50,12 @@ export class FlightSearchComponent {
     this.router.navigate(['/flight', flightId]);
   }
 
-  bookFlight(flight: FlightInfoDTO): void {
-    this.router.navigate(['/book-flight'], {
-      state: { flight:  flight }
-    });
-  }
+bookFlight(flight: FlightInfoDTO): void {
+  console.log('🎯 Booking flight with ID:', flight.id);
+  
+  // Pass flight ID in URL instead of state
+  this.router. navigate(['/book-flight', flight.id]);
+}
 
   formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
