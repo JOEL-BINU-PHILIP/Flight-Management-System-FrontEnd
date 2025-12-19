@@ -63,22 +63,26 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 mb-3" *ngFor="let flight of flights">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title">{{ flight.airlineName }} - {{ flight.flightNumber }}</h5>
-          <p class="card-text">
-            <strong>Route:</strong> {{ flight.fromPlace }} → {{ flight.toPlace }}<br>
-            <strong>Departure:</strong> {{ formatDateTime(flight.departureTime) }}<br>
-            <strong>Arrival:</strong> {{ formatDateTime(flight.arrivalTime) }}<br>
-            <strong>Price:</strong> ₹{{ flight.price }}<br>
-            <strong>Available Seats:</strong> {{ flight.availableSeats }}
-          </p>
-          <button class="btn btn-primary" (click)="viewDetails(flight.id)">
-            View Details
-          </button>
-        </div>
+  <div class="col-md-6 mb-3" *ngFor="let flight of flights">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ flight.airlineName }} - {{ flight.flightNumber }}</h5>
+        <p class="card-text">
+          <strong>Route:</strong> {{ flight.fromPlace }} → {{ flight.toPlace }}<br>
+          <strong>Departure:</strong> {{ formatDateTime(flight.departureTime) }}<br>
+          <strong>Arrival:</strong> {{ formatDateTime(flight.arrivalTime) }}<br>
+          <strong>Price:</strong> ₹{{ flight.price }}<br>
+          <strong>Available Seats:</strong> {{ flight. availableSeats }}
+        </p>
+        
+        <button class="btn btn-primary me-2" (click)="viewDetails(flight.id)">
+          View Details
+        </button>
+        <button class="btn btn-success" (click)="bookFlight(flight)">
+          Book Now
+        </button>
       </div>
     </div>
   </div>
+</div>
 </div>

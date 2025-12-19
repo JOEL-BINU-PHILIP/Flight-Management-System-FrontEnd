@@ -48,4 +48,12 @@ export class FlightService {
       { responseType: 'text', withCredentials: true }
     );
   }
+  bookFlight(bookingRequest: any): Observable<any> {
+  console.log('FlightService - Booking flight:', bookingRequest);
+  return this.http.post(
+    'http://localhost:8080/api/book/book',
+    bookingRequest,
+    { withCredentials: true }
+  );
+}
 }

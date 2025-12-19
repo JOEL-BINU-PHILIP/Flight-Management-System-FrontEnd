@@ -50,6 +50,12 @@ export class FlightSearchComponent {
     this.router.navigate(['/flight', flightId]);
   }
 
+  bookFlight(flight: FlightInfoDTO): void {
+    this.router.navigate(['/book-flight'], {
+      state: { flight:  flight }
+    });
+  }
+
   formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
     return date.toLocaleString();
