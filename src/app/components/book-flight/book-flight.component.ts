@@ -17,7 +17,7 @@ export class BookFlightComponent implements OnInit {
   bookingSuccess = false;
   bookingError = false;
   errorMessage = '';
-  isLoading = true;  // ⚠️ Start as true while loading
+  isLoading = true;  
   bookingResponse: any = null;
 
   constructor(
@@ -26,21 +26,21 @@ export class BookFlightComponent implements OnInit {
     public router: Router,
     private flightService: FlightService
   ) {
-    console.log('🏗️ BookFlightComponent Constructor');
+    console.log('BookFlightComponent Constructor');
   }
 
   ngOnInit(): void {
-    console. log('🚀 BookFlightComponent ngOnInit');
+    console. log(' BookFlightComponent ngOnInit');
 
     // Get flight ID from URL parameter
     const flightId = this.route.snapshot.paramMap. get('flightId');
-    console.log('🆔 Flight ID from URL:', flightId);
+    console.log('Flight ID from URL:', flightId);
 
     if (flightId) {
       // Load flight details from API
       this.loadFlightDetails(flightId);
     } else {
-      console.log('❌ No flight ID in URL - redirecting to search');
+      console.log('No flight ID in URL - redirecting to search');
       this.router.navigate(['/search']);
     }
 
@@ -82,7 +82,7 @@ export class BookFlightComponent implements OnInit {
   }
 
   loadFlightDetails(flightId: string): void {
-    console.log('📡 Loading flight details for ID:', flightId);
+    console.log('Loading flight details for ID:', flightId);
     this.isLoading = true;
 
     this.flightService.getFlightDetails(flightId).subscribe({
@@ -130,7 +130,7 @@ export class BookFlightComponent implements OnInit {
       passengers: this.bookingForm.value.passengers
     };
 
-    console.log('📤 Submitting booking:', bookingRequest);
+    console.log('Submitting booking:', bookingRequest);
 
     this.flightService.bookFlight(bookingRequest).subscribe({
       next: (response) => {

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/home">✈️ Flight Management</a>
+    <a class="navbar-brand" routerLink="/home">Flight Management</a>
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -20,6 +20,13 @@
         <li class="nav-item" *ngIf="isLoggedIn && isAdmin()">
           <a class="nav-link" routerLink="/add-flight" routerLinkActive="active">Add Flight</a>
         </li>
+        <!-- Add these links in your navbar component -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/view-ticket">View Ticket</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/booking-history">My Bookings</a>
+        </li>
       </ul>
       
       <ul class="navbar-nav">
@@ -35,6 +42,7 @@
         <li class="nav-item" *ngIf="isLoggedIn">
           <button class="btn btn-outline-light" (click)="logout()">Logout</button>
         </li>
+        
       </ul>
     </div>
   </div>

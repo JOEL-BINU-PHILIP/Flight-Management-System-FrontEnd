@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">My Booking History</h2>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{ error }}
+  </div>
+
+  <!-- No Bookings -->
+  <div *ngIf="! loading && bookings.length === 0 && !error" class="alert alert-info text-center">
+    <h4>No bookings found</h4>
+    <p>You haven't made any bookings yet. </p>
+    <a routerLink="/search" class="btn btn-primary">Search Flights</a>
+  </div>
+
+  <!-- Booking Cards -->
+  <div class="row" *ngIf="bookings.length > 0">
+    <div class="col-md-6 mb-4" *ngFor="let booking of bookings">
+      <div class="card booking-card" [ngClass]="{'cancelled': booking.canceled}">
+        <div class="card-header" [ngClass]="booking.canceled ? 'bg-danger' : 'bg-success'" style="color: white;">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">PNR: {{ booking.pnr }}</h5>
+            <span class="badge" [ngClass]="booking.canceled ? 'bg-light text-dark' : 'bg-white text-success'">
+              {{ booking.canceled ? 'CANCELLED' : 'CONFIRMED' }}
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p><strong>Email:</strong> {{ booking.email }}</p>
+          <p><strong>Flight ID:</strong> {{ booking.flightId }}</p>
+          <p><strong>Seats Booked:</strong> {{ booking.seatsBooked }}</p>
+          <p><strong>Booking Time: </strong> {{ booking.bookingTime | date:'medium' }}</p>
+          <p *ngIf="booking.canceled">
+            <strong>Cancelled At:</strong> {{ booking.canceledAt | date:'medium' }}
+          </p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <a [routerLink]="['/view-ticket']" [queryParams]="{pnr: booking.pnr}" class="btn btn-primary btn-sm">
+            View Details
+          </a>
+          <button 
+            *ngIf="! booking.canceled" 
+            class="btn btn-danger btn-sm"
+            (click)="cancelBooking(booking.pnr)">
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
