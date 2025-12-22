@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlightService } from '../../services/flight.service';
 import { FlightInfoDTO } from '../../models/flight.model';
@@ -12,32 +12,44 @@ import { CommonModule } from '@angular/common';
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.css'
 })
-export class FlightSearchComponent {
+export class FlightSearchComponent implements OnInit {
   searchForm:  any = {
     fromPlace: '',
     toPlace: '',
-    date: ''
+    date:  ''
   };
 
   flights: FlightInfoDTO[] = [];
   isSearched = false;
   isLoading = false;
   errorMessage = '';
-
+  minDate:  string = '';  
   constructor(
-    private flightService:  FlightService,
+    private flightService: FlightService,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.setMinDate();
+  }
+
+  setMinDate(): void {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today. getMonth() + 1).padStart(2, '0');
+    const day = String(today. getDate()).padStart(2, '0');
+    this.minDate = `${year}-${month}-${day}`;
+  }
+
   onSearch(): void {
     this.isLoading = true;
-    this.errorMessage = '';
+    this. errorMessage = '';
 
     this.flightService.searchFlights(this.searchForm).subscribe({
       next: data => {
-        this.flights = data.flights;
+        this.flights = data. flights;
         this.isSearched = true;
-        this.isLoading = false;
+        this. isLoading = false;
       },
       error: err => {
         this.errorMessage = 'Failed to search flights';
@@ -50,12 +62,10 @@ export class FlightSearchComponent {
     this.router.navigate(['/flight', flightId]);
   }
 
-bookFlight(flight: FlightInfoDTO): void {
-  console.log('🎯 Booking flight with ID:', flight.id);
-  
-  // Pass flight ID in URL instead of state
-  this.router. navigate(['/book-flight', flight.id]);
-}
+  bookFlight(flight: FlightInfoDTO): void {
+    console.log('Booking flight with ID:', flight.id);
+    this.router.navigate(['/book-flight', flight.id]);
+  }
 
   formatDateTime(dateTime: string): string {
     const date = new Date(dateTime);
