@@ -9,20 +9,22 @@ import { AddFlightComponent } from './components/add-flight/add-flight.component
 import { BookFlightComponent } from './components/book-flight/book-flight.component';
 import { ViewTicketComponent } from './components/view-ticket/view-ticket.component';
 import { BookingHistoryComponent } from './components/booking-history/booking-history.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component:  RegisterComponent },
-  { path:  'search', component: FlightSearchComponent, canActivate: [authGuard] },
-  { path: 'flight/: id', component: FlightDetailsComponent, canActivate: [authGuard] },
-  { path:  'add-airline', component:  AddAirlineComponent, canActivate: [authGuard] },
+  { path: 'register', component: RegisterComponent },
+  { path: 'search', component: FlightSearchComponent, canActivate: [authGuard] },
+  { path: 'flight/:id', component: FlightDetailsComponent, canActivate: [authGuard] },
+  { path: 'add-airline', component: AddAirlineComponent, canActivate: [authGuard] },
   { path: 'add-flight', component: AddFlightComponent, canActivate: [authGuard] },
   { path: 'book-flight', component: BookFlightComponent, canActivate: [authGuard] },
   { path: 'book-flight/:flightId', component: BookFlightComponent, canActivate: [authGuard] },
   { path: 'view-ticket', component: ViewTicketComponent, canActivate: [authGuard] },
   { path: 'booking-history', component: BookingHistoryComponent, canActivate: [authGuard] },
+  { path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '/home' }
 ];
