@@ -6,7 +6,8 @@ import {
   SearchFlightResponse,
   FlightInfoDTO,
   AddAirlineRequest,
-  AddInventoryRequest
+  AddInventoryRequest,
+  Airline
 } from '../models/flight.model';
 
 const FLIGHT_API = 'http://localhost:8080/api/flight/';
@@ -27,8 +28,15 @@ export class FlightService {
   }
 
   getFlightDetails(flightId: string): Observable<FlightInfoDTO> {
-    return this.http.get<FlightInfoDTO>(
+    return this. http.get<FlightInfoDTO>(
       FLIGHT_API + 'details/' + flightId,
+      { withCredentials:  true }
+    );
+  }
+
+  getAllAirlines(): Observable<Airline[]> {
+    return this. http.get<Airline[]>(
+      FLIGHT_API + 'airlines',
       { withCredentials: true }
     );
   }
@@ -45,15 +53,16 @@ export class FlightService {
     return this.http.post(
       FLIGHT_API + `airline/${airlineId}/inventory`,
       inventory,
-      { responseType: 'text', withCredentials: true }
+      { responseType:  'text', withCredentials:  true }
     );
   }
+  
   bookFlight(bookingRequest: any): Observable<any> {
-  console.log('FlightService - Booking flight:', bookingRequest);
-  return this.http.post(
-    'http://localhost:8080/api/book/book',
-    bookingRequest,
-    { withCredentials: true }
-  );
-}
+    console.log('FlightService - Booking flight:', bookingRequest);
+    return this.http.post(
+      'http://localhost:8080/api/book/book',
+      bookingRequest,
+      { withCredentials:  true }
+    );
+  }
 }

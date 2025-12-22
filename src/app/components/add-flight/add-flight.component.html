@@ -8,54 +8,125 @@
           <form (ngSubmit)="onSubmit()">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="airlineId" class="form-label">Airline ID</label>
-                <input type="text" class="form-control" id="airlineId" [(ngModel)]="form.airlineId" name="airlineId" required />
+                <label for="airlineId" class="form-label">Select Airline</label>
+                <select 
+                  class="form-select" 
+                  id="airlineId" 
+                  [(ngModel)]="form.airlineId" 
+                  name="airlineId" 
+                  required
+                  [disabled]="isLoadingAirlines"
+                >
+                  <option value="" disabled selected>Choose an airline... </option>
+                  <option *ngFor="let airline of airlines" [value]="airline.id">
+                    {{ airline.name }}
+                  </option>
+                </select>
+                <small *ngIf="isLoadingAirlines" class="text-muted">Loading airlines...</small>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="flightNumber" class="form-label">Flight Number</label>
-                <input type="text" class="form-control" id="flightNumber" [(ngModel)]="form.flightNumber" name="flightNumber" placeholder="e.g., 6E101" required />
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="flightNumber" 
+                  [(ngModel)]="form.flightNumber" 
+                  name="flightNumber" 
+                  placeholder="e.g., 6E101" 
+                  required 
+                />
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="fromPlace" class="form-label">From</label>
-                <input type="text" class="form-control" id="fromPlace" [(ngModel)]="form.fromPlace" name="fromPlace" placeholder="e.g., Bangalore" required />
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="fromPlace" 
+                  [(ngModel)]="form.fromPlace" 
+                  name="fromPlace" 
+                  placeholder="e. g., Bangalore" 
+                  required 
+                />
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="toPlace" class="form-label">To</label>
-                <input type="text" class="form-control" id="toPlace" [(ngModel)]="form.toPlace" name="toPlace" placeholder="e.g., Mumbai" required />
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="toPlace" 
+                  [(ngModel)]="form.toPlace" 
+                  name="toPlace" 
+                  placeholder="e. g., Mumbai" 
+                  required 
+                />
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="departureTime" class="form-label">Departure Time</label>
-                <input type="datetime-local" class="form-control" id="departureTime" [(ngModel)]="form.departureTime" name="departureTime" required />
+                <input 
+                  type="datetime-local" 
+                  class="form-control" 
+                  id="departureTime" 
+                  [(ngModel)]="form.departureTime" 
+                  name="departureTime" 
+                  [min]="minDateTime"
+                  required 
+                />
+                <small class="text-muted">Cannot select past dates/times</small>
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="arrivalTime" class="form-label">Arrival Time</label>
-                <input type="datetime-local" class="form-control" id="arrivalTime" [(ngModel)]="form.arrivalTime" name="arrivalTime" required />
+                <input 
+                  type="datetime-local" 
+                  class="form-control" 
+                  id="arrivalTime" 
+                  [(ngModel)]="form.arrivalTime" 
+                  name="arrivalTime" 
+                  [min]="minDateTime"
+                  required 
+                />
+                <small class="text-muted">Must be after departure time</small>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="price" class="form-label">Price (₹)</label>
-                <input type="number" class="form-control" id="price" [(ngModel)]="form.price" name="price" min="0" required />
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="price" 
+                  [(ngModel)]="form.price" 
+                  name="price" 
+                  min="0" 
+                  required 
+                />
               </div>
 
               <div class="col-md-6 mb-3">
                 <label for="totalSeats" class="form-label">Total Seats</label>
-                <input type="number" class="form-control" id="totalSeats" [(ngModel)]="form.totalSeats" name="totalSeats" min="1" required />
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  id="totalSeats" 
+                  [(ngModel)]="form.totalSeats" 
+                  name="totalSeats" 
+                  min="1" 
+                  required 
+                />
               </div>
             </div>
 
             <div class="alert alert-success" *ngIf="isSuccessful">
-              ✅ Flight added successfully!
+              ✅ Flight added successfully! 
             </div>
 
             <div class="alert alert-danger" *ngIf="isFailed">
@@ -63,7 +134,11 @@
             </div>
 
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-lg" [disabled]="isLoading">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg" 
+                [disabled]="isLoading || isLoadingAirlines || !form.airlineId"
+              >
                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
                 Add Flight
               </button>

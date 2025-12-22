@@ -1,6 +1,6 @@
 export interface SearchFlightRequest {
   fromPlace: string;
-  toPlace:  string;
+  toPlace: string;
   date: string; // YYYY-MM-DD
 }
 
@@ -20,9 +20,15 @@ export interface SearchFlightResponse {
   flights:  FlightInfoDTO[];
 }
 
-export interface AddAirlineRequest {
+export interface Airline {
+  id: string;
   name:  string;
-  logoUrl:  string;
+  logoUrl: string;
+}
+
+export interface AddAirlineRequest {
+  name: string;
+  logoUrl: string;
 }
 
 export interface AddInventoryRequest {
