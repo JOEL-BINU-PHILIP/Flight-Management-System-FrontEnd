@@ -4,16 +4,16 @@ import { TokenStorageService } from '../../services/token-storage.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector:  'app-navbar',
+  selector:   'app-navbar',
   standalone: true,
-  imports:  [CommonModule, RouterModule],
+  imports:   [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.css'
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
-  username?:  string;
-  role?: string;
+  username? :  string;
+  role?:  string;
 
   constructor(
     private tokenStorage: TokenStorageService,
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = this.tokenStorage.isLoggedIn();
     if (this.isLoggedIn) {
       const user = this.tokenStorage.getUser();
-      this.username = user. email;
+      this.username = user.email;
       this.role = user.role;
     }
   }
@@ -36,6 +36,10 @@ export class NavbarComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    return this.role === 'ROLE_ADMIN';
+    return this. role === 'ROLE_ADMIN';
+  }
+
+  isCustomer(): boolean {
+    return this.role === 'ROLE_CUSTOMER';
   }
 }

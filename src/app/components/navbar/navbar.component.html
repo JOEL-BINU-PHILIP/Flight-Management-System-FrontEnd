@@ -20,17 +20,17 @@
         <li class="nav-item" *ngIf="isLoggedIn && isAdmin()">
           <a class="nav-link" routerLink="/add-flight" routerLinkActive="active">Add Flight</a>
         </li>
-        <!-- Add these links in your navbar component -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/view-ticket">View Ticket</a>
+        <!-- Customer-only links -->
+        <li class="nav-item" *ngIf="isLoggedIn && isCustomer()">
+          <a class="nav-link" routerLink="/view-ticket" routerLinkActive="active">View Ticket</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/booking-history">My Bookings</a>
+        <li class="nav-item" *ngIf="isLoggedIn && isCustomer()">
+          <a class="nav-link" routerLink="/booking-history" routerLinkActive="active">My Bookings</a>
         </li>
       </ul>
       
       <ul class="navbar-nav">
-        <li class="nav-item" *ngIf="!isLoggedIn">
+        <li class="nav-item" *ngIf="! isLoggedIn">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
         <li class="nav-item" *ngIf="!isLoggedIn">
