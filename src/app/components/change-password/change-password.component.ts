@@ -16,7 +16,7 @@ import { ChangePasswordRequest } from '../../models/change-password.model';
 export class ChangePasswordComponent {
   form: any = {
     oldPassword: '',
-    newPassword:  '',
+    newPassword: '',
     confirmPassword: ''
   };
 
@@ -32,67 +32,83 @@ export class ChangePasswordComponent {
     private router: Router
   ) {}
 
+  private passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+
   onSubmit(): void {
     this.isLoading = true;
-    this. isFailed = false;
+    this.isFailed = false;
     this.isSuccessful = false;
     this.errorMessage = '';
 
-    // Validate passwords match
-    if (this.form.newPassword !== this.form. confirmPassword) {
-      this.errorMessage = 'New passwords do not match';
-      this.isFailed = true;
-      this.isLoading = false;
+    const { oldPassword, newPassword, confirmPassword } = this.form;
+
+  
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      this.fail('All fields are required');
       return;
     }
 
-    // Validate password length
-    if (this. form.newPassword.length < 6) {
-      this.errorMessage = 'New password must be at least 6 characters long';
-      this.isFailed = true;
-      this.isLoading = false;
+    if (oldPassword === newPassword) {
+      this.fail('New password must be different from current password');
+      return;
+    }
+
+
+    if (!this.passwordRegex.test(newPassword)) {
+      this.fail(
+        'Password must be at least 8 characters and include uppercase, lowercase, number, and special character'
+      );
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.fail('New passwords do not match');
       return;
     }
 
     const user = this.tokenStorage.getUser();
     if (!user || !user.email) {
-      this.errorMessage = 'User session not found.  Please login again.';
-      this.isFailed = true;
-      this.isLoading = false;
+      this.fail('User session not found. Please login again.');
       return;
     }
 
     const changePasswordRequest: ChangePasswordRequest = {
       email: user.email,
-      oldPassword: this.form.oldPassword,
-      newPassword: this. form.newPassword
+      oldPassword: oldPassword,
+      newPassword: newPassword
     };
 
     this.authService.changePassword(changePasswordRequest).subscribe({
-      next: data => {
+      next: () => {
         this.successMessage = 'Password changed successfully!';
         this.isSuccessful = true;
         this.isLoading = false;
-        
-        // Reset form
+
+        // Reset form (kept)
         this.form = {
           oldPassword: '',
           newPassword: '',
           confirmPassword: ''
         };
 
-        // Redirect to home after 2 seconds
+        // Redirect after 2 seconds (kept)
         setTimeout(() => {
           this.router.navigate(['/home']);
         }, 2000);
       },
       error: err => {
         console.error('Change password error:', err);
-        this.errorMessage = err.error?.error || 'Failed to change password';
-        this.isFailed = true;
-        this.isLoading = false;
+        this.fail(err.error?.error || 'Failed to change password');
       }
     });
+  }
+
+  
+  private fail(message: string): void {
+    this.errorMessage = message;
+    this.isFailed = true;
+    this.isLoading = false;
   }
 
   cancel(): void {
